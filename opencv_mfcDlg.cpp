@@ -67,6 +67,7 @@ BEGIN_MESSAGE_MAP(CopencvmfcDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BTN_FACEDETECT_IMAGE, &CopencvmfcDlg::OnBnClickedBtnFacedetectImage)
+	ON_BN_CLICKED(IDC_BTN_FACE_VIDEO, &CopencvmfcDlg::OnBnClickedBtnFaceVideo)
 END_MESSAGE_MAP()
 
 
@@ -160,4 +161,10 @@ HCURSOR CopencvmfcDlg::OnQueryDragIcon()
 void CopencvmfcDlg::OnBnClickedBtnFacedetectImage()
 {
 	facedetect_image();
+}
+
+
+void CopencvmfcDlg::OnBnClickedBtnFaceVideo()
+{
+	facedetect_video(0);
 }

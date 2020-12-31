@@ -17,18 +17,28 @@ string nestedCascadeName;
 
 int facedetect_image( void )
 {
-    VideoCapture capture;
     Mat frame, image;
     string inputName;
     bool tryflip = false;
     CascadeClassifier cascade, nestedCascade;
     double scale;
+
+    static TCHAR BASED_CODE szFilter[] = _T("이미지 파일(*.BMP, *.GIF, *.JPG, *.PNG) | *.BMP;*.GIF;*.JPG;*.PNG;*.bmp;*.jpg;*.gif;*.png | 모든파일(*.*) | *.* || ");
+
+    CFileDialog dlg(TRUE, NULL, NULL, OFN_HIDEREADONLY, szFilter);
+
+    if (IDOK == dlg.DoModal())
+    {
+        CString pathName = dlg.GetPathName();
+        CT2CA pszConvertedAnsiString(pathName);
+        inputName = string(pszConvertedAnsiString);
         
+    }
     cascadeName = "haarcascade_frontalface_alt.xml";
     nestedCascadeName = "haarcascade_eye_tree_eyeglasses.xml";
     scale = 1;
            
-    inputName = "lena.jpg";
+    //inputName = "lena.jpg";
     
     if (!nestedCascade.load(nestedCascadeName))
         cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
@@ -56,6 +66,57 @@ int facedetect_image( void )
     
     return 0;
 }
+
+
+int facedetect_video(int camera)
+{
+    VideoCapture capture;
+    Mat frame, image;
+    bool tryflip;
+    CascadeClassifier cascade, nestedCascade;
+    double scale;
+
+    cascadeName = "haarcascade_frontalface_alt.xml";
+    nestedCascadeName = "haarcascade_eye_tree_eyeglasses.xml";
+    scale = 1;
+    tryflip = false;
+    
+    if (!nestedCascade.load(nestedCascadeName))
+        cerr << "WARNING: Could not load classifier cascade for nested objects" << endl;
+    if (!cascade.load(cascadeName))
+    {
+        cerr << "ERROR: Could not load classifier cascade" << endl;
+        return -1;
+    }
+     
+    if (!capture.open(camera))
+    {
+        cout << "Capture from camera #" << camera << " didn't work" << endl;
+        return 1;
+    }
+    
+    if (capture.isOpened())
+    {
+        cout << "Video capturing has been started ..." << endl;
+
+        for (;;)
+        {
+            capture >> frame;
+            if (frame.empty())
+                break;
+
+            Mat frame1 = frame.clone();
+            detectAndDraw(frame1, cascade, nestedCascade, scale, tryflip);
+
+            char c = (char)waitKey(10);
+            if (c == 27 || c == 'q' || c == 'Q')
+                break;
+        }
+    }
+    
+    return 0;
+}
+
 
 void detectAndDraw( Mat& img, CascadeClassifier& cascade,
                     CascadeClassifier& nestedCascade,
