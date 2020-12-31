@@ -34,4 +34,5 @@ protected:
 public:
 	afx_msg void OnBnClickedBtnFacedetectImage();
 	afx_msg void OnBnClickedBtnFaceVideo();
+	afx_msg void OnBnClickedBtnEdge();
 };

@@ -68,6 +68,7 @@ BEGIN_MESSAGE_MAP(CopencvmfcDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BTN_FACEDETECT_IMAGE, &CopencvmfcDlg::OnBnClickedBtnFacedetectImage)
 	ON_BN_CLICKED(IDC_BTN_FACE_VIDEO, &CopencvmfcDlg::OnBnClickedBtnFaceVideo)
+	ON_BN_CLICKED(IDC_BTN_EDGE, &CopencvmfcDlg::OnBnClickedBtnEdge)
 END_MESSAGE_MAP()
 
 
@@ -167,4 +168,10 @@ void CopencvmfcDlg::OnBnClickedBtnFacedetectImage()
 void CopencvmfcDlg::OnBnClickedBtnFaceVideo()
 {
 	facedetect_video(0);
+}
+
+
+void CopencvmfcDlg::OnBnClickedBtnEdge()
+{
+	edge();
 }

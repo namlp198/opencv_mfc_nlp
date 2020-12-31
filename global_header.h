@@ -2,3 +2,4 @@
 
 int facedetect_image(void);
 int facedetect_video(int camera);
+int edge(void);

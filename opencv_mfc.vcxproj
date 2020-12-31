@@ -204,6 +204,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cpp\edge.cpp" />
     <ClCompile Include="facedetect._image.cpp" />
     <ClCompile Include="opencv_mfc.cpp" />
     <ClCompile Include="opencv_mfcDlg.cpp" />
